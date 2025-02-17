@@ -22,6 +22,8 @@ O objetivo deste projeto é fornecer uma API RESTful para gerenciar um sistema d
 - **MongoDB**: Banco de dados NoSQL.
 - **Mongoose**: Biblioteca para manipulação do MongoDB em Node.js.
 
+Comando para a instalação:
+npm install express mongoose cors dotenv
 ---
 
 ## 🔧 **Como Rodar o Projeto**
@@ -37,10 +39,3 @@ git clone https://github.com/SeuUsuario/Back-NFSU2.git
 cd Back-NFSU2
 ```
 
-## 🔧 Dependências
-Este projeto utiliza as seguintes dependências:
-
-express: Framework web para Node.js.
-mongoose: ORM para trabalhar com MongoDB.
-cors: Para permitir requisições de diferentes origens.
-dotenv: Para carregar variáveis de ambiente (como a URL de conexão do MongoDB).
