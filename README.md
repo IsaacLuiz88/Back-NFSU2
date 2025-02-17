@@ -21,10 +21,11 @@ O objetivo deste projeto é fornecer uma API RESTful para gerenciar um sistema d
 - **Express.js**: Framework para criação da API RESTful.
 - **MongoDB**: Banco de dados NoSQL.
 - **Mongoose**: Biblioteca para manipulação do MongoDB em Node.js.
-
-Comando para a instalação:
-npm install express mongoose cors dotenv
 ---
+
+Comando para a instalação: <br>
+npm install express mongoose cors dotenv
+
 
 ## 🔧 **Como Rodar o Projeto**
 
