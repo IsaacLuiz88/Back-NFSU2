@@ -35,9 +35,9 @@ Primeiro, clone o repositório para o seu computador:
 ```bash
 git clone https://github.com/SeuUsuario/Back-NFSU2.git
 cd Back-NFSU2
---
+```
 
-🔧 Dependências
+## 🔧 Dependências
 Este projeto utiliza as seguintes dependências:
 
 express: Framework web para Node.js.
