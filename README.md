@@ -35,3 +35,12 @@ Primeiro, clone o repositório para o seu computador:
 ```bash
 git clone https://github.com/SeuUsuario/Back-NFSU2.git
 cd Back-NFSU2
+--
+
+🔧 Dependências
+Este projeto utiliza as seguintes dependências:
+
+express: Framework web para Node.js.
+mongoose: ORM para trabalhar com MongoDB.
+cors: Para permitir requisições de diferentes origens.
+dotenv: Para carregar variáveis de ambiente (como a URL de conexão do MongoDB).
