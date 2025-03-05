@@ -15,7 +15,7 @@ export const createCar = async (req: Request, res: Response) => {
   }
 };
 
-// Listar todos os carros
+// Controlador para listar todos os carros
 export const getAllCars = async (req: Request, res: Response) => {
   try {
     const cars = await Car.find();
@@ -25,7 +25,7 @@ export const getAllCars = async (req: Request, res: Response) => {
   }
 };
 
-// Atualizar um carro pelo ID
+// Controlador para atualizar um carro pelo ID
 export const updateCarById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -39,7 +39,7 @@ export const updateCarById = async (req: Request, res: Response) => {
   }
 };
 
-// Deletar um carro pelo ID
+// Controlador para deletar um carro pelo ID
 export const deleteCarById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -54,7 +54,7 @@ export const deleteCarById = async (req: Request, res: Response) => {
 };
 
 
-// Fazer um lance em um carro
+// Controlador para fazer um lance em um carro
 export const bidOnCar = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -76,13 +76,13 @@ export const bidOnCar = async (req: Request, res: Response) => {
     // Notificar todos os clientes sobre o novo lance
     io.emit("newBid", { carId: car._id, user, bidAmount });
 
-    res.json(car);
+    res.json({ message: "Lance feito com sucesso", car });
   } catch (err) {
     res.status(500).json({ error: "Erro ao fazer um lance", details: err });
   }
 };
 
-// Buscar carros vendidos
+// Controlador para listar apenas carros vendidos / Buscar carros vendidos
 export const getSoldCars = async (req: Request, res: Response) => {
   try {
     const soldCars = await Car.find({ status: "Vendido" });
