@@ -14,5 +14,8 @@ export function connectToDatabase() {
    
     mongoose.connect(uri)
       .then(() => console.log("🔥 Conectado ao MongoDB Atlas"))
-      .catch((err) => console.error("❌ Erro ao conectar ao MongoDB Atlas", err));
+      .catch((err) => {
+        console.error("❌ Erro ao conectar ao MongoDB Atlas", err);
+        process.exit(1);
+      });
 }

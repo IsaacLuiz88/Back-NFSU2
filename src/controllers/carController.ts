@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Car from "../models/Car";
 import { io } from "../../server"
+import mongoose from "mongoose";
 
 // Criar um novo carro
 export const createCar = async (req: Request, res: Response) => {
@@ -27,6 +28,11 @@ export const getAllCars = async (req: Request, res: Response) => {
 export const updateCarById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "ID inválido" });
+    }
+
     const updatedCar = await Car.findByIdAndUpdate(id, req.body, { new: true });
     if (!updatedCar) {
       return res.status(404).json({ error: "Carro não encontrado" });
@@ -41,6 +47,11 @@ export const updateCarById = async (req: Request, res: Response) => {
 export const deleteCarById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "ID inválido" });
+    }
+    
     const deletedCar = await Car.findByIdAndDelete(id);
     if (!deletedCar) {
       return res.status(404).json({ error: "Carro não encontrado" });
@@ -58,15 +69,24 @@ export const bidOnCar = async (req: Request, res: Response) => {
     const { id } = req.params;
     const { user, bidAmount } = req.body;
     
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "ID inválido" });
+    }
+    
     const car = await Car.findById(id);
     if (!car) {
       return res.status(404).json({ error: "Carro não encontrado" });
     }
-    
+
     if (bidAmount <= car.currentPrice) {
       return res.status(400).json({ error: "O lance deve ser maior que o valor atual" });
     }
-    
+
+    const lastBid = car.bids.length > 0 ? car.bids[car.bids.length - 1] : null;
+    if (lastBid && lastBid.user === user && lastBid.bidAmount === bidAmount) {
+      return res.status(400).json({ error: "Não pode repetir o mesmo lance consecutivamente" });
+    }
+
     car.bids.push({ user, bidAmount, timestamp: new Date() });
     car.currentPrice = bidAmount;
     await car.save();
@@ -96,6 +116,10 @@ export const addPartRating = async (req: Request, res: Response) => {
     const { id } = req.params;
     const { partName, rating } = req.body;
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "ID inválido" });
+    }
+    
     const car = await Car.findById(id);
     if (!car) {
       return res.status(404).json({ error: "Carro não encontrado" });
@@ -116,6 +140,10 @@ export const updatePartRating = async (req: Request, res: Response) => {
     const { id } = req.params;
     const { partName, rating } = req.body;
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "ID inválido" });
+    }
+    
     const car = await Car.findById(id);
     if (!car) {
       return res.status(404).json({ error: "Carro não encontrado" });
@@ -124,6 +152,10 @@ export const updatePartRating = async (req: Request, res: Response) => {
     const part = car.parts.find((p) => p.name === partName);
     if (!part) {
       return res.status(404).json({ error: "Peça não encontrada" });
+    }
+
+    if (rating < 0 || rating > 10) {
+      return res.status(400).json({ error: "A avaliação deve estar entre 0 e 10" });
     }
 
     part.rating = rating;
