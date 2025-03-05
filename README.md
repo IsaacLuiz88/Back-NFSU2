@@ -21,20 +21,11 @@ O objetivo deste projeto é fornecer uma API RESTful para gerenciar um sistema d
 - **Express.js**: Framework para criação da API RESTful.
 - **MongoDB**: Banco de dados NoSQL.
 - **Mongoose**: Biblioteca para manipulação do MongoDB em Node.js.
-
 ---
 
-## 🔧 Dependências
-Este projeto utiliza as seguintes dependências:
-
-express: Framework web para Node.js.
-mongoose: ORM para trabalhar com MongoDB.
-cors: Para permitir requisições de diferentes origens.
-dotenv: Para carregar variáveis de ambiente (como a URL de conexão do MongoDB).
-
-```bash
+Comando para a instalação: <br>
 npm install express mongoose cors dotenv
-```
+
 
 ## 🔧 **Como Rodar o Projeto**
 
@@ -48,17 +39,4 @@ Primeiro, clone o repositório para o seu computador:
 git clone https://github.com/SeuUsuario/Back-NFSU2.git
 cd Back-NFSU2
 ```
-
-Após isso, configure o seu banco de dados (neste projeto, foi utilizado Mongo Atlas). <br>
-Crie o seu Cluster e faça a conexão via String.
----
-
-## Instalar as dependências
-Instale as dependências do projeto utilizando o npm:
-npm install
-
-
-3. Configurar o MongoDB
-Certifique-se de que o MongoDB está instalado e rodando na sua máquina ou configure uma instância do MongoDB Atlas para uso remoto. Se estiver usando o MongoDB local, a conexão padrão será mongodb://localhost:27017/car-auction.
-
 
