@@ -1,5 +1,6 @@
 import express from "express";
 import Car from "../models/Car";
+import { io } from "../../server"
 
 const router = express.Router();
 
@@ -37,6 +38,30 @@ router.put("/:id", async (req: any, res: any) => {
     return res.status(500).json({ error: "Erro ao atualizar o carro", details: err });
   }
 });
+
+// Rota para fazer um lance em um carro
+router.post("/:id/bid", async (req: any, res: any) => {
+  try {
+    const { id } = req.params;
+    const { user, bidAmount } = req.body;
+    const car = await Car.findById(id);
+
+    if (!car) {
+      return res.status(404).json({ error: "Carro não encontrado" });
+    }
+
+    car.bids.push({ user, bidAmount, timestamp: new Date() });
+    car.currentPrice = bidAmount;
+    await car.save();
+
+    // Evento emitindo uma notificação toda vez que alguém faz um lance.
+    io.emit("update_bid", { carId: id, user, bidAmount });
+    res.json(car);
+  } catch (err) {
+    res.status(500).json({ error: "Erro ao fazer um lance", details: err });
+  }
+});
+
 
 
 // Rota para deletar um carro pelo ID
