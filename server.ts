@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import { connectToDatabase } from "./database";
 import cors from "cors";
 import carRoutes from "./src/routes/carRoutes";
 
@@ -13,16 +14,11 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+// Conectar ao MongoDB Atlas
+connectToDatabase();
+
 // Rotas
 app.use("/cars", carRoutes);
 
-// Conectar ao MongoDB Atlas
-const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://leilao:arleyisaac@cluster0.e1xcm.mongodb.net/leilaodb?retryWrites=true&w=majority";
 
-mongoose
-  .connect(MONGO_URI)
-  .then(() => {
-    console.log("🔥 Conectado ao MongoDB Atlas");
-    app.listen(PORT, () => console.log(`🚀 Servidor rodando na porta ${PORT}`));
-  })
-  .catch((err) => console.error("❌ Erro ao conectar ao MongoDB Atlas", err));
+app.listen(PORT, () => console.log(`🚀 Servidor rodando na porta ${PORT}`));
