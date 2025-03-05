@@ -7,7 +7,7 @@ const CarSchema = new Schema({
   engine: { type: String, required: true },
   status: { type: String, default: "Disponível" },
   startingPrice: { type: Number, required: true },
-  currentPrice: { type: Number, required: true },
+  currentPrice: { type: Number, required: true, default: function (this: any) { return this.startingPrice; } },
   bids: [
     {
       user: { type: String },
