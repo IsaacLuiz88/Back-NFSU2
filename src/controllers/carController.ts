@@ -28,11 +28,16 @@ export const getAllCars = async (req: Request, res: Response) => {
 export const updateCarById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    const { startingPrice, currentPrice } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ error: "ID inválido" });
     }
 
+    if (startingPrice === undefined || currentPrice === undefined) {
+      return res.status(400).json({ error: "Campos obrigatórios não podem ser removidos" });
+    }
+    
     const updatedCar = await Car.findByIdAndUpdate(id, req.body, { new: true });
     if (!updatedCar) {
       return res.status(404).json({ error: "Carro não encontrado" });
