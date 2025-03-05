@@ -51,3 +51,48 @@ export const deleteCarById = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Erro ao deletar o carro", details: err });
   }
 };
+
+// Adicionar avaliação a uma peça do carro
+export const addPartRating = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { partName, rating } = req.body;
+
+    const car = await Car.findById(id);
+    if (!car) {
+      return res.status(404).json({ error: "Carro não encontrado" });
+    }
+
+    car.parts.push({ name: partName, rating });
+    await car.save();
+
+    res.status(201).json(car);
+  } catch (err) {
+    res.status(500).json({ error: "Erro ao adicionar avaliação da peça", details: err });
+  }
+};
+
+// Atualizar a avaliação de uma peça existente
+export const updatePartRating = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { partName, rating } = req.body;
+
+    const car = await Car.findById(id);
+    if (!car) {
+      return res.status(404).json({ error: "Carro não encontrado" });
+    }
+
+    const part = car.parts.find((p) => p.name === partName);
+    if (!part) {
+      return res.status(404).json({ error: "Peça não encontrada" });
+    }
+
+    part.rating = rating;
+    await car.save();
+
+    res.json(car);
+  } catch (err) {
+    res.status(500).json({ error: "Erro ao atualizar avaliação da peça", details: err });
+  }
+};

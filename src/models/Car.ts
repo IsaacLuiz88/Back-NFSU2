@@ -21,6 +21,12 @@ const CarSchema = new Schema({
       text: { type: String },
       timestamp: { type: Date, default: Date.now }
     }
+  ],
+  parts: [
+    {
+      name: { type: String, required: true },
+      rating: { type: Number, min: 0, max: 10, required: true }
+    }
   ]
 });
 
